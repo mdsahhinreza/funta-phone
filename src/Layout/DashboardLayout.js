@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Header from "../Pages/Shared/Header/Header";
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaUserAlt } from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -31,6 +31,11 @@ const DashboardLayout = () => {
             <li className="mt-2">
               <Link>
                 <FaHeart /> My Wish List
+              </Link>
+            </li>
+            <li className="mt-2">
+              <Link>
+                <FaUserAlt /> All Users
               </Link>
             </li>
           </ul>

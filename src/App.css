@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.custom-mx-w {
+  max-width: 1440px;
+  margin:auto ;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
