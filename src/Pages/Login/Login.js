@@ -1,21 +1,36 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import loginGif from "../../assets/Login/login.gif";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login, singInWithGoogle } = useContext(AuthContext);
   const [loginError, setLoginError] = useState(null);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm();
 
   const handleLogin = (data) => {
-    login(data.email, data.password);
+    login(data.email, data.password)
+      .then((result) => {
+        toast.success("Login Success");
+        navigate("/");
+      })
+      .catch((err) => setLoginError(err.message));
+  };
+
+  const handleGoogleSignIn = () => {
+    const googleProvider = new GoogleAuthProvider();
+    singInWithGoogle(googleProvider).then((result) => {
+      toast.success("Login Success");
+      navigate("/");
+    });
   };
   return (
     <div className="py-5">
@@ -66,6 +81,7 @@ const Login = () => {
                 <small>
                   <Link className="text-primary">Forget Password ?</Link>
                 </small>
+                {/* <p>{loginError}</p> */}
               </div>
               <input className="btn w-full mt-5" type="submit" />
               <p className="text-center mt-2">
@@ -75,10 +91,13 @@ const Login = () => {
                 </Link>
               </p>
               <div className="divider">OR</div>
-              <button className="btn btn-outline btn-secondary uppercase w-full">
-                SignIn With Google
-              </button>
             </form>
+            <button
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-secondary uppercase w-full"
+            >
+              SignIn With Google
+            </button>
           </div>
           <div className="hidden md:block">
             <img className="w-2/3" src={loginGif} alt="" />

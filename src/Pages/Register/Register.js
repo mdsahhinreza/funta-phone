@@ -2,17 +2,20 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthProvider";
 import registeGif from "../../assets/Register/register.gif";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateProfileInfo, singInWithGoogle } =
+    useContext(AuthContext);
   const [registerError, setRegisterError] = useState(null);
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm();
+  const navigate = useNavigate();
 
   const imgbbKey = process.env.REACT_APP_imgbb_key;
 
@@ -29,6 +32,7 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((result) => {
+        const imgUrl = result.data.url;
         if (result.success) {
           const userData = {
             name: data.name,
@@ -41,10 +45,56 @@ const Register = () => {
             .then((result) => {
               const user = result.user;
               console.log(user);
+              toast.success("Registration Complete");
+              updateProfileInfo(data.name, imgUrl).catch((err) =>
+                console.error(err)
+              );
+
+              fetch("http://localhost:5000/users", {
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify(userData),
+              })
+                .then((res) => res.json())
+                .then((userData) => {
+                  console.log(userData);
+                });
             })
             .catch();
         }
       });
+  };
+
+  const handleGoogleSignIn = () => {
+    const googleProvider = new GoogleAuthProvider();
+    singInWithGoogle(googleProvider)
+      .then((result) => {
+        const user = result.user;
+
+        const userData = {
+          name: user.displayName,
+          img: user.photoURL,
+          email: user.email,
+          userType: "buyer",
+        };
+
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((userData) => {
+            console.log(userData);
+          });
+        toast.success("Login Success");
+        navigate("/");
+      })
+      .catch((err) => setRegisterError(err.message));
   };
   return (
     <div className="py-5">
@@ -176,10 +226,13 @@ const Register = () => {
                 </Link>
               </p>
               <div className="divider">OR</div>
-              <button className="btn btn-outline btn-secondary uppercase w-full">
-                Continue With Google
-              </button>
             </form>
+            <button
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-secondary uppercase w-full"
+            >
+              Continue With Google
+            </button>
           </div>
           <div className="hidden md:block">
             <img className="w-2/3" src={registeGif} alt="" />
