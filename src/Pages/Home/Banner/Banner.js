@@ -20,7 +20,6 @@ const Banner = () => {
         navigation
         autoplay={true}
         pagination={{ clickable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
       >
         <SwiperSlide>
           <div className="hero">
