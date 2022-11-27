@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthProvider";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
   const menus = (
     <>
       <li>
@@ -10,9 +12,19 @@ const Header = () => {
       <li>
         <Link>Products</Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
+      {user ? (
+        <>
+          <li>
+            <Link to="/login">LogOut</Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </>
+      )}
     </>
   );
   return (

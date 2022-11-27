@@ -23,7 +23,7 @@ const Login = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="bg-base-200 p-7 rounded-md">
             <h3 className="text-3xl font-bold">Login</h3>
-            <form className="w-96" onSubmit={handleSubmit(handleLogin)}>
+            <form className="w-full" onSubmit={handleSubmit(handleLogin)}>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -80,7 +80,7 @@ const Login = () => {
               </button>
             </form>
           </div>
-          <div>
+          <div className="hidden md:block">
             <img className="w-2/3" src={loginGif} alt="" />
           </div>
         </div>

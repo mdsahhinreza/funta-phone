@@ -13,17 +13,46 @@ const Register = () => {
     handleSubmit,
     reset,
   } = useForm();
+
+  const imgbbKey = process.env.REACT_APP_imgbb_key;
+
   const handleRegister = (data) => {
-    console.log(data);
-    createUser(data.email, data.password);
+    const img = data.photo[0];
+    const formData = new FormData();
+    formData.append("image", img);
+    const url = `https://api.imgbb.com/1/upload?key=${imgbbKey}`;
+    // console.log(data);
+
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          const userData = {
+            name: data.name,
+            img: result.data.url,
+            email: data.email,
+            userType: data.userType,
+          };
+
+          createUser(data.email, data.password)
+            .then((result) => {
+              const user = result.user;
+              console.log(user);
+            })
+            .catch();
+        }
+      });
   };
   return (
     <div className="py-5">
       <div className="hero h-[80vh]">
         <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="bg-base-200 p-7 rounded-md">
+          <div className="bg-base-200 p-7 rounded-md md:w-2/4">
             <h3 className="text-3xl font-bold">Register</h3>
-            <form className="w-96" onSubmit={handleSubmit(handleRegister)}>
+            <form className="w-full" onSubmit={handleSubmit(handleRegister)}>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text">Full Name</span>
@@ -117,7 +146,7 @@ const Register = () => {
                       <span className="label-text">Buyer</span>
                     </label>
                     <input
-                      {...register("user-type")}
+                      {...register("userType")}
                       type="radio"
                       name="user-type"
                       value={"buyer"}
@@ -130,7 +159,7 @@ const Register = () => {
                       <span className="label-text">Seller</span>
                     </label>
                     <input
-                      {...register("user-type")}
+                      {...register("userType")}
                       type="radio"
                       name="user-type"
                       value={"saler"}
@@ -152,7 +181,7 @@ const Register = () => {
               </button>
             </form>
           </div>
-          <div>
+          <div className="hidden md:block">
             <img className="w-2/3" src={registeGif} alt="" />
           </div>
         </div>
