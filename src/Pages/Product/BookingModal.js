@@ -1,16 +1,47 @@
+import { format } from "date-fns";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../context/AuthProvider";
 
-const BookingModal = ({ product }) => {
+const BookingModal = ({ product, setBooking }) => {
   const { user } = useContext(AuthContext);
-  const { productName, resalePrice } = product;
-  const { register, handleSubmit } = useForm();
+  const { _id, productName, resalePrice, photo } = product;
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-  const currentData = new Date();
+  const bookingTime = format(new Date(), "PP");
 
   const handleBooking = (data) => {
-    console.log(currentData);
+    const booking = {
+      buyerName: data.name,
+      buyerEmail: data.email,
+      productName,
+      productImg: photo,
+      productId: _id,
+      resalePrice,
+      buyerPhoneNumber: data.phoneNumber,
+      bookingTime,
+    };
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setBooking(null);
+        toast.success("Booking Successful!");
+      });
+
+    // console.log(booking);
   };
   return (
     <div>
@@ -81,13 +112,18 @@ const BookingModal = ({ product }) => {
                 </label>
                 <input
                   {...register("phoneNumber", {
-                    required: "Email Address is required",
+                    required: "Phone Number is required",
                   })}
                   className={`input input-bordered w-full`}
                   placeholder="Your Contact Phone Number"
                   type="text"
                   name="phoneNumber"
                 />
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-left">
+                    {errors.phoneNumber?.message}
+                  </p>
+                )}
               </div>
               <div className="form-control w-full">
                 <label className="label">
@@ -95,13 +131,18 @@ const BookingModal = ({ product }) => {
                 </label>
                 <input
                   {...register("meetingLocation", {
-                    required: "Email Address is required",
+                    required: "Meeting Location is required",
                   })}
                   className={`input input-bordered w-full`}
                   placeholder="Where you want meet with saler?"
                   type="text"
                   name="meetingLocation"
                 />
+                {errors.meetingLocation && (
+                  <p className="text-red-500 text-left">
+                    {errors.meetingLocation?.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -114,9 +155,6 @@ const BookingModal = ({ product }) => {
                   value="Confirm Booking"
                 />
               </div>
-              <button className="btn btn-accent mt-5 w-full" type="Submit">
-                Submit
-              </button>
             </form>
           </div>
           {/* <div className="modal-action">

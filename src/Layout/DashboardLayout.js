@@ -10,7 +10,7 @@ const DashboardLayout = () => {
       <Header></Header>
       <div className="drawer drawer-mobile">
         <input id="sidebar" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content">
           <Outlet></Outlet>
           {/* <label
             htmlFor="sidebar"
@@ -24,7 +24,7 @@ const DashboardLayout = () => {
           <ul className="menu p-4 w-80  text-base-content list-decimal">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <Link>
+              <Link to="/dashboard/my-order">
                 <FaShoppingCart></FaShoppingCart> My Orders
               </Link>
             </li>
@@ -34,7 +34,7 @@ const DashboardLayout = () => {
               </Link>
             </li>
             <li className="mt-2">
-              <Link>
+              <Link to="/dashboard/all-users">
                 <FaUserAlt /> All Users
               </Link>
             </li>
