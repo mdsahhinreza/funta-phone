@@ -21,7 +21,7 @@ const Categories = () => {
         {categories.map((category, i) => (
           <Link
             key={i}
-            to={`category/${category._id}`}
+            to={`/products/category/${category._id}`}
             className={`card p-5 shadow-xl md:p-8 border cursor-pointer bg-accent hover:bg-primary hover:text-white ${category.customClass}`}
           >
             <div key={i}>
