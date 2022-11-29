@@ -2,12 +2,32 @@ import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Header from "../Pages/Shared/Header/Header";
-import { FaHeart, FaShoppingCart, FaUserAlt } from "react-icons/fa";
+import {
+  FaFolderPlus,
+  FaHeart,
+  FaShoppingCart,
+  FaUserAlt,
+  FaUsers,
+} from "react-icons/fa";
 import { AuthContext } from "../context/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import { BsPhone } from "react-icons/bs";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
-  if (!user) {
+
+  const { data: userInfo = [] } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/users?email=${user.email}`
+      );
+      const data = res.json();
+      return data;
+    },
+  });
+
+  if (!userInfo) {
     return (
       <div className="h-[100vh] flex justify-center items-center">
         <div className="card w-64 bg-base-100 shadow-xl">
@@ -36,7 +56,7 @@ const DashboardLayout = () => {
         <div className="drawer-side ">
           <label htmlFor="sidebar" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80  text-base-content list-decimal">
-            {user.userType === "admin" && (
+            {userInfo[0]?.userType === "admin" && (
               <>
                 <li className="mt-2">
                   <Link to="/dashboard/all-users">
@@ -48,10 +68,35 @@ const DashboardLayout = () => {
                     <FaUserAlt /> All Seller
                   </Link>
                 </li>
+                <li className="mt-2">
+                  <Link to="/dashboard/all-seller">
+                    <FaUserAlt /> Reported Items
+                  </Link>
+                </li>
               </>
             )}
 
-            {user.userType === "seller" && (
+            {userInfo[0]?.userType === "seller" && (
+              <>
+                <li>
+                  <Link to="/dashboard/add-product">
+                    <FaFolderPlus /> Add Product
+                  </Link>
+                </li>
+                <li className="mt-2">
+                  <Link>
+                    <BsPhone /> My Products
+                  </Link>
+                </li>
+                <li className="mt-2">
+                  <Link>
+                    <FaUsers /> My Buyers
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {userInfo[0]?.userType === "buyer" && (
               <>
                 <li>
                   <Link to="/dashboard/my-order">
@@ -60,12 +105,12 @@ const DashboardLayout = () => {
                 </li>
                 <li className="mt-2">
                   <Link>
-                    <FaHeart /> My Wish List
+                    <FaHeart />
+                    Wish List
                   </Link>
                 </li>
               </>
             )}
-            <li>{user.userType}</li>
           </ul>
         </div>
       </div>
