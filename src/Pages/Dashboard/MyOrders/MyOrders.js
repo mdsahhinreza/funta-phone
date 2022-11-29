@@ -5,6 +5,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
+
   const { data: orders = [] } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
@@ -15,6 +16,7 @@ const MyOrders = () => {
       return data;
     },
   });
+
   return (
     <div>
       <h2 className="text-2xl font-bold uppercase my-2">My Orders :</h2>

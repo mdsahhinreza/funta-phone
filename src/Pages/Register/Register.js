@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/AuthProvider";
-import registeGif from "../../assets/Register/register.gif";
+import registerGif from "../../assets/Register/register.gif";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
@@ -59,7 +59,7 @@ const Register = () => {
               })
                 .then((res) => res.json())
                 .then((userData) => {
-                  console.log(userData);
+                  navigate("/");
                 });
             })
             .catch();
@@ -198,7 +198,7 @@ const Register = () => {
                     <input
                       {...register("userType")}
                       type="radio"
-                      name="user-type"
+                      name="userType"
                       value={"buyer"}
                       defaultChecked
                       className="radio radio-warning"
@@ -211,8 +211,8 @@ const Register = () => {
                     <input
                       {...register("userType")}
                       type="radio"
-                      name="user-type"
-                      value={"saler"}
+                      name="userType"
+                      value={"seller"}
                       className="radio radio-warning"
                     />
                   </div>
@@ -235,7 +235,7 @@ const Register = () => {
             </button>
           </div>
           <div className="hidden md:block">
-            <img className="w-2/3" src={registeGif} alt="" />
+            <img className="w-2/3" src={registerGif} alt="" />
           </div>
         </div>
       </div>

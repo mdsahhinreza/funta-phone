@@ -20,11 +20,15 @@ const Categories = () => {
       <div className="grid grid-cols-2  md:grid-cols-4 align-middle mx-auto gap-4 justify-center">
         {categories.map((category, i) => (
           <Link
+            className={`card p-5 shadow-xl md:p-8 border cursor-pointer bg-accent ${
+              category.name === "xiaomi" && "md:col-span-2"
+            } hover:bg-primary text-center hover:text-white ${
+              category.customClass
+            }`}
             key={i}
             to={`/products/category/${category._id}`}
-            className={`card p-5 shadow-xl md:p-8 border cursor-pointer bg-accent hover:bg-primary hover:text-white ${category.customClass}`}
           >
-            <div key={i}>
+            <div>
               <p className="m-auto uppercase font-bold">{category.name}</p>
             </div>
           </Link>
