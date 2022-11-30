@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast from "react-hot-toast";
-import { AiFillCheckCircle } from "react-icons/ai";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const AllSeller = () => {
+const AllBuyer = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?userType=seller");
+      const res = await fetch("http://localhost:5000/users?userType=buyer");
       const data = await res.json();
       return data;
     },
@@ -21,17 +20,6 @@ const AllSeller = () => {
       .then((data) => {
         console.log(data);
         toast.success("User Deleted Successful");
-        refetch();
-      });
-  };
-
-  const handleMakeVerify = (id) => {
-    fetch(`http://localhost:5000/user/verify/${id}`, {
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        toast.success("Update to Admin Success!");
         refetch();
       });
   };
@@ -66,19 +54,6 @@ const AllSeller = () => {
                 <td className="capitalize">{user.userType}</td>
                 <td className="text-center">
                   <button
-                    disabled={user.isVerified}
-                    onClick={() => handleMakeVerify(user._id)}
-                    className="btn btn-primary btn-sm"
-                  >
-                    {user.isVerified ? (
-                      <>
-                        <AiFillCheckCircle className="mr-1" /> Verified
-                      </>
-                    ) : (
-                      "Verify"
-                    )}
-                  </button>
-                  <button
                     onClick={() => handleDeleteUser(user._id)}
                     className="btn btn-error text-white btn-sm ml-2"
                   >
@@ -94,4 +69,4 @@ const AllSeller = () => {
   );
 };
 
-export default AllSeller;
+export default AllBuyer;

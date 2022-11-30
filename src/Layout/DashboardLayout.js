@@ -7,7 +7,7 @@ import {
   FaHeart,
   FaShoppingCart,
   FaUserAlt,
-  FaUsers,
+  FaUserTie,
 } from "react-icons/fa";
 import { AuthContext } from "../context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ const DashboardLayout = () => {
       const res = await fetch(
         `http://localhost:5000/users?email=${user.email}`
       );
-      const data = res.json();
+      const data = await res.json();
       return data;
     },
   });
@@ -69,6 +69,11 @@ const DashboardLayout = () => {
                   </Link>
                 </li>
                 <li className="mt-2">
+                  <Link to="/dashboard/all-buyer">
+                    <FaUserTie /> All Buyer
+                  </Link>
+                </li>
+                <li className="mt-2">
                   <Link to="/dashboard/all-seller">
                     <FaUserAlt /> Reported Items
                   </Link>
@@ -84,15 +89,15 @@ const DashboardLayout = () => {
                   </Link>
                 </li>
                 <li className="mt-2">
-                  <Link>
+                  <Link to="/dashboard/my-products">
                     <BsPhone /> My Products
                   </Link>
                 </li>
-                <li className="mt-2">
+                {/* <li className="mt-2">
                   <Link>
                     <FaUsers /> My Buyers
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
 
@@ -104,7 +109,7 @@ const DashboardLayout = () => {
                   </Link>
                 </li>
                 <li className="mt-2">
-                  <Link>
+                  <Link to="/dashboard/my-wish-items">
                     <FaHeart />
                     Wish List
                   </Link>

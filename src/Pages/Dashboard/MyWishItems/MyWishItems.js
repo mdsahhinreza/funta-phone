@@ -3,23 +3,20 @@ import React, { useContext } from "react";
 import { AiFillCreditCard } from "react-icons/ai";
 import { AuthContext } from "../../../context/AuthProvider";
 
-const MyOrders = () => {
+const MyWishItems = () => {
   const { user } = useContext(AuthContext);
 
-  const { data: orders = [] } = useQuery({
-    queryKey: ["orders"],
+  const { data: wishItems = [] } = useQuery({
+    queryKey: ["wishItems"],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5000/bookings?email=${user.email}`
-      );
+      const res = await fetch(`http://localhost:5000/wish?email=${user.email}`);
       const data = await res.json();
       return data;
     },
   });
-
   return (
     <div>
-      <h2 className="text-2xl font-bold uppercase my-2">My Orders :</h2>
+      <h2 className="text-2xl font-bold uppercase my-2">My Wish Items :</h2>
       <div className="overflow-x-auto">
         <table className="table w-[95%]">
           <thead>
@@ -28,30 +25,27 @@ const MyOrders = () => {
               <th>Image</th>
               <th>Product Name</th>
               <th>Product Price</th>
-              <th>Booking Date</th>
-              <th>Booking Location</th>
+              <th>Added Date</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, i) => (
-              <tr key={order._id} className="hover">
+            {wishItems.map((item, i) => (
+              <tr key={item._id} className="hover">
                 <th>{i + 1}</th>
                 <td>
                   <div className="avatar">
                     <div className="w-24 rounded">
-                      <img src={order.productImg} alt="" />
+                      <img src={item.productImg} alt="" />
                     </div>
                   </div>
                 </td>
-                <td>{order.productName}</td>
-                <td>{order.resalePrice}</td>
-                <td>{order.bookingTime}</td>
-                <td>{order.bookingTime}</td>
-
+                <td>{item.productName}</td>
+                <td>{item.resalePrice}</td>
+                <td>{item.addedTime}</td>
                 <td>
                   <button className="btn btn-primary btn-sm rounded-md">
-                    <AiFillCreditCard className="mr-2" /> Payment
+                    <AiFillCreditCard className="mr-2" /> Book Now
                   </button>
                 </td>
               </tr>
@@ -63,4 +57,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default MyWishItems;

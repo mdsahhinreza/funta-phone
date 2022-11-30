@@ -2,14 +2,18 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
 import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
+import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../../Pages/Dashboard/AllSeller/AllSeller";
 import AllUser from "../../Pages/Dashboard/AllUser/AllUser";
 import Dashboard from "../../Pages/Dashboard/Deshboard/Dashboard";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
+import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
+import MyWishItems from "../../Pages/Dashboard/MyWishItems/MyWishItems";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Product/Products";
 import Register from "../../Pages/Register/Register";
+import AdminRoute from "./PrivetRoute/AdminRoute";
 import PrivetRoute from "./PrivetRoute/PrivetRoute";
 
 const router = createBrowserRouter([
@@ -67,6 +71,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/dashboard/my-products",
+        element: (
+          <PrivetRoute>
+            <MyProducts></MyProducts>
+          </PrivetRoute>
+        ),
+      },
+      {
         path: "/dashboard/my-order",
         element: (
           <PrivetRoute>
@@ -75,19 +87,35 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/all-users",
+        path: "/dashboard/my-wish-items",
         element: (
           <PrivetRoute>
-            <AllUser></AllUser>
+            <MyWishItems></MyWishItems>
           </PrivetRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-users",
+        element: (
+          <AdminRoute>
+            <AllUser></AllUser>
+          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/all-seller",
         element: (
-          <PrivetRoute>
+          <AdminRoute>
             <AllSeller></AllSeller>
-          </PrivetRoute>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-buyer",
+        element: (
+          <AdminRoute>
+            <AllBuyer></AllBuyer>
+          </AdminRoute>
         ),
       },
     ],

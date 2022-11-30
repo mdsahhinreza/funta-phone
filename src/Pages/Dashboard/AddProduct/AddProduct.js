@@ -1,15 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
+  const postTime = format(new Date(), "PP");
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
@@ -25,8 +31,8 @@ const AddProduct = () => {
     const img = data.productPhoto[0];
     const formData = new FormData();
     formData.append("image", img);
+
     const url = `https://api.imgbb.com/1/upload?key=${imgbbKey}`;
-    // console.log(data);
 
     fetch(url, {
       method: "POST",
@@ -35,9 +41,38 @@ const AddProduct = () => {
       .then((res) => res.json())
       .then((result) => {
         const imgUrl = result.data.url;
-        console.log(imgUrl, data);
+        const productData = {
+          productPhoto: imgUrl,
+          productName: data.productName,
+          sellerLocation: data.location,
+          resalePrice: data.resalePrice,
+          OriginalPrice: data.originalPrice,
+          usedYear: data.usedYear,
+          postTime: postTime,
+          sellerName: user.displayName,
+          sellerEmail: user.email,
+          productCategory: data.category,
+          productCondition: data.phoneCondition,
+        };
+
+        fetch("http://localhost:5000/products", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(productData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.acknowledged) {
+              toast.success("Product Added Successful");
+              reset();
+              navigate("/dashboard/my-products");
+            }
+          });
       });
   };
+
   return (
     <div>
       <form
@@ -93,6 +128,25 @@ const AddProduct = () => {
             placeholder="Resale Price"
             type="text"
             name="resalePrice"
+          />
+          {errors.resalePrice && (
+            <p className="text-red-500 text-left">
+              {errors.resalePrice?.message}
+            </p>
+          )}
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Used Year</span>
+          </label>
+          <input
+            {...register("usedYear", {
+              required: "Used Year is required",
+            })}
+            className={`input input-bordered w-full`}
+            placeholder="Type Number of Year"
+            type="number"
+            name="usedYear"
           />
           {errors.resalePrice && (
             <p className="text-red-500 text-left">

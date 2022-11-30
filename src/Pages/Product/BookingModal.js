@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthProvider";
 
 const BookingModal = ({ product, setBooking }) => {
   const { user } = useContext(AuthContext);
-  const { _id, productName, resalePrice, photo } = product;
+  const { _id, productName, resalePrice, productPhoto } = product;
   const {
     register,
     formState: { errors },
@@ -20,7 +20,7 @@ const BookingModal = ({ product, setBooking }) => {
       buyerName: data.name,
       buyerEmail: data.email,
       productName,
-      productImg: photo,
+      productImg: productPhoto,
       productId: _id,
       resalePrice,
       buyerPhoneNumber: data.phoneNumber,

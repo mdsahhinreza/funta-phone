@@ -24,7 +24,6 @@ const Register = () => {
     const formData = new FormData();
     formData.append("image", img);
     const url = `https://api.imgbb.com/1/upload?key=${imgbbKey}`;
-    // console.log(data);
 
     fetch(url, {
       method: "POST",
@@ -89,7 +88,7 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((userData) => {
-            console.log(userData);
+            // console.log(userData);
           });
         toast.success("Login Success");
         navigate("/");

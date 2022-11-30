@@ -2,7 +2,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginGif from "../../assets/Login/login.gif";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -10,6 +10,8 @@ const Login = () => {
   const { login, singInWithGoogle } = useContext(AuthContext);
   const [loginError, setLoginError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     formState: { errors },
@@ -20,7 +22,7 @@ const Login = () => {
     login(data.email, data.password)
       .then((result) => {
         toast.success("Login Success");
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((err) => setLoginError(err.message));
   };
@@ -29,7 +31,7 @@ const Login = () => {
     const googleProvider = new GoogleAuthProvider();
     singInWithGoogle(googleProvider).then((result) => {
       toast.success("Login Success");
-      navigate("/");
+      navigate(from, { replace: true });
     });
   };
   return (
