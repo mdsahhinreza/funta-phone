@@ -49,7 +49,7 @@ const Register = () => {
                 console.error(err)
               );
 
-              fetch("http://localhost:5000/users", {
+              fetch("https://funta-phone-server.vercel.app/users", {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",
@@ -79,7 +79,7 @@ const Register = () => {
           userType: "buyer",
         };
 
-        fetch("http://localhost:5000/users", {
+        fetch("https://funta-phone-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

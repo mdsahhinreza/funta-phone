@@ -5,7 +5,9 @@ const Ads = () => {
   const { data: products = [] } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/ads/products`);
+      const res = await fetch(
+        `https://funta-phone-server.vercel.app/ads/products`
+      );
       const data = await res.json();
       return data;
     },

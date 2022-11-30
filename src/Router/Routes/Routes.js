@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
+import Blog from "../../Pages/Blog/Blog";
 import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../../Pages/Dashboard/AllSeller/AllSeller";
@@ -11,6 +12,7 @@ import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import MyWishItems from "../../Pages/Dashboard/MyWishItems/MyWishItems";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import NotFound from "../../Pages/NotFound/NotFound";
 import Products from "../../Pages/Product/Products";
 import Register from "../../Pages/Register/Register";
 import AdminRoute from "./PrivetRoute/AdminRoute";
@@ -33,7 +35,9 @@ const router = createBrowserRouter([
           </PrivetRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/products/category/${params.id}`),
+          fetch(
+            `https://funta-phone-server.vercel.app/products/category/${params.id}`
+          ),
       },
       {
         path: "/login",
@@ -42,6 +46,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/blogs",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "/*",
+        element: <NotFound></NotFound>,
       },
     ],
   },

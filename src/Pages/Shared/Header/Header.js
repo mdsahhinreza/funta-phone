@@ -26,10 +26,14 @@ const Header = () => {
         <Link to="/products/category/allProducts">Products</Link>
       </li>
       <li>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/blogs">Blogs</Link>
       </li>
+
       {user ? (
         <>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
           <li>
             <Link onClick={userLogOutHandler}>LogOut</Link>
           </li>

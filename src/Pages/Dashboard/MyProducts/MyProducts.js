@@ -9,14 +9,14 @@ const MyProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user.email}`
+        `https://funta-phone-server.vercel.app/products?email=${user.email}`
       );
       const data = await res.json();
       return data;
     },
   });
   const deleteProduct = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
+    fetch(`https://funta-phone-server.vercel.app/products/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -29,7 +29,7 @@ const MyProducts = () => {
   };
   const adsProduct = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/product/ads/${id}`, {
+    fetch(`https://funta-phone-server.vercel.app/product/ads/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())

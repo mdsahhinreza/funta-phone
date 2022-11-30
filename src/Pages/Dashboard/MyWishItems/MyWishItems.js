@@ -9,7 +9,9 @@ const MyWishItems = () => {
   const { data: wishItems = [] } = useQuery({
     queryKey: ["wishItems"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/wish?email=${user.email}`);
+      const res = await fetch(
+        `https://funta-phone-server.vercel.app/wish?email=${user.email}`
+      );
       const data = await res.json();
       return data;
     },

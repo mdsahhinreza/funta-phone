@@ -7,13 +7,15 @@ const AllBuyer = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?userType=buyer");
+      const res = await fetch(
+        "https://funta-phone-server.vercel.app/users?userType=buyer"
+      );
       const data = await res.json();
       return data;
     },
   });
   const handleDeleteUser = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://funta-phone-server.vercel.app/users/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

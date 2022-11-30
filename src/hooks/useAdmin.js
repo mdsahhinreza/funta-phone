@@ -4,7 +4,7 @@ const useAdmin = (email) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAdminLoading, setIsAdminLoading] = useState(true);
   useEffect(() => {
-    fetch(`http://localhost:5000/users?email=${email}`)
+    fetch(`https://funta-phone-server.vercel.app/users?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log(data[0].userType);

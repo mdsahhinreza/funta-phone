@@ -20,7 +20,7 @@ const DashboardLayout = () => {
     queryKey: ["userInfo"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/users?email=${user.email}`
+        `https://funta-phone-server.vercel.app/users?email=${user.email}`
       );
       const data = await res.json();
       return data;

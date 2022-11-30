@@ -8,13 +8,15 @@ const AllSeller = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?userType=seller");
+      const res = await fetch(
+        "https://funta-phone-server.vercel.app/users?userType=seller"
+      );
       const data = await res.json();
       return data;
     },
   });
   const handleDeleteUser = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://funta-phone-server.vercel.app/users/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -26,7 +28,7 @@ const AllSeller = () => {
   };
 
   const handleMakeVerify = (id) => {
-    fetch(`http://localhost:5000/user/verify/${id}`, {
+    fetch(`https://funta-phone-server.vercel.app/user/verify/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())

@@ -27,7 +27,7 @@ const BookingModal = ({ product, setBooking }) => {
       bookingTime,
     };
 
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://funta-phone-server.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -38,7 +38,7 @@ const BookingModal = ({ product, setBooking }) => {
       .then((data) => {
         setBooking(null);
 
-        fetch(`http://localhost:5000/product/sold/${_id}`, {
+        fetch(`https://funta-phone-server.vercel.app/product/sold/${_id}`, {
           method: "PUT",
         })
           .then((res) => res.json())

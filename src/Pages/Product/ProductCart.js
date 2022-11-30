@@ -21,7 +21,9 @@ const ProductCart = ({ product, setBooking }) => {
   } = product;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users?email=${product.sellerEmail}`)
+    fetch(
+      `https://funta-phone-server.vercel.app/users?email=${product.sellerEmail}`
+    )
       .then((res) => res.json())
       .then((data) => {
         // console.log(data[0].userType);
@@ -31,9 +33,12 @@ const ProductCart = ({ product, setBooking }) => {
 
   const handleReportedItem = (product) => {
     // console.log(product);
-    fetch(`http://localhost:5000/report/product/${product._id}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://funta-phone-server.vercel.app/report/product/${product._id}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -53,7 +58,7 @@ const ProductCart = ({ product, setBooking }) => {
       resalePrice: product.resalePrice,
     };
 
-    fetch("http://localhost:5000/wish", {
+    fetch("https://funta-phone-server.vercel.app/wish", {
       method: "POST",
       headers: {
         "content-type": "application/json",
