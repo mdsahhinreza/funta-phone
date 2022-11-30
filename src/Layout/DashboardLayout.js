@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { AuthContext } from "../context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-import { BsPhone } from "react-icons/bs";
+import { AiFillFolder } from "react-icons/ai";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
@@ -90,7 +90,7 @@ const DashboardLayout = () => {
                 </li>
                 <li className="mt-2">
                   <Link to="/dashboard/my-products">
-                    <BsPhone /> My Products
+                    <AiFillFolder /> My Products
                   </Link>
                 </li>
                 {/* <li className="mt-2">

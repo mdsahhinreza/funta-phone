@@ -69,7 +69,7 @@ const MyProducts = () => {
                 <td>{product.productName}</td>
                 <td>{product.resalePrice}</td>
                 <td>{product.postTime}</td>
-                <td>{product?.status === "sold" ? "Sold" : "Available"}</td>
+                <td>{product?.isSold ? "Sold" : "Available"}</td>
                 <td>
                   <button
                     onClick={() => deleteProduct(product._id)}
@@ -79,7 +79,7 @@ const MyProducts = () => {
                   </button>
                   <button
                     onClick={() => adsProduct(product._id)}
-                    disabled={product?.isAds}
+                    disabled={product?.isAds || product?.isSold}
                     className="btn btn-success btn-sm rounded-md"
                   >
                     ADS
