@@ -39,7 +39,7 @@ const AllSeller = () => {
   };
   return (
     <div>
-      <h2 className="text-2xl font-bold uppercase my-2">All User :</h2>
+      <h2 className="text-2xl font-bold uppercase my-2">All Sellers :</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>

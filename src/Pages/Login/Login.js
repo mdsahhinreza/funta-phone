@@ -29,10 +29,32 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     const googleProvider = new GoogleAuthProvider();
-    singInWithGoogle(googleProvider).then((result) => {
-      toast.success("Login Success");
-      navigate(from, { replace: true });
-    });
+    singInWithGoogle(googleProvider)
+      .then((result) => {
+        const user = result.user;
+
+        const userData = {
+          name: user.displayName,
+          img: user.photoURL,
+          email: user.email,
+          userType: "buyer",
+        };
+
+        fetch("https://funta-phone-server.vercel.app/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((userData) => {
+            // console.log(userData);
+          });
+        toast.success("Login Success");
+        navigate("/");
+      })
+      .catch((err) => console.error(err.message));
   };
   return (
     <div className="py-5">
@@ -72,7 +94,7 @@ const Login = () => {
                   className={`input input-bordered w-full ${
                     errors.password && "input-error"
                   }`}
-                  placeholder="First name"
+                  placeholder="Password"
                   type="password"
                   name="password"
                 />
@@ -85,7 +107,7 @@ const Login = () => {
                 </small>
                 {/* <p>{loginError}</p> */}
               </div>
-              <input className="btn w-full mt-5" type="submit" />
+              <input className="btn w-full mt-5" type="submit" value="LogIn" />
               <p className="text-center mt-2">
                 New to Funta-Mobile ?{" "}
                 <Link className="text-primary" to="/register">

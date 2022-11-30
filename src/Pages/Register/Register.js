@@ -217,7 +217,11 @@ const Register = () => {
                   </div>
                 </div>
               </div>
-              <input className="btn w-full mt-5" type="submit" />
+              <input
+                className="btn w-full mt-5"
+                type="submit"
+                value="Register"
+              />
               <p className="text-center mt-2">
                 Already Member ? Please{" "}
                 <Link className="text-primary" to="/login">

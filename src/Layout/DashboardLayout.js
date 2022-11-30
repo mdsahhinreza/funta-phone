@@ -74,7 +74,7 @@ const DashboardLayout = () => {
                   </Link>
                 </li>
                 <li className="mt-2">
-                  <Link to="/dashboard/all-seller">
+                  <Link to="/dashboard/reported-products">
                     <FaUserAlt /> Reported Items
                   </Link>
                 </li>
