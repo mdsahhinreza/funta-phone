@@ -55,7 +55,7 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side ">
           <label htmlFor="sidebar" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80  text-base-content list-decimal">
+          <ul className="menu p-4 w-80 bg-base-200 text-base-content list-decimal">
             {userInfo[0]?.userType === "admin" && (
               <>
                 <li className="mt-2">

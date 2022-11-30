@@ -27,9 +27,21 @@ const MyProducts = () => {
         }
       });
   };
+  const adsProduct = (id) => {
+    console.log(id);
+    fetch(`http://localhost:5000/product/ads/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        toast.success("Product Added to Advertisement");
+        refetch();
+      });
+  };
   return (
     <div>
-      <h2 className="text-2xl font-bold uppercase my-2">My Orders :</h2>
+      <h2 className="text-2xl font-bold uppercase my-2">My Products :</h2>
       <div className="overflow-x-auto">
         <table className="table w-[95%]">
           <thead>
@@ -61,9 +73,16 @@ const MyProducts = () => {
                 <td>
                   <button
                     onClick={() => deleteProduct(product._id)}
-                    className="btn btn-error btn-sm rounded-md"
+                    className="btn btn-error btn-sm rounded-md mr-2"
                   >
                     Delete
+                  </button>
+                  <button
+                    onClick={() => adsProduct(product._id)}
+                    disabled={product?.isAds}
+                    className="btn btn-success btn-sm rounded-md"
+                  >
+                    ADS
                   </button>
                 </td>
               </tr>

@@ -53,6 +53,8 @@ const AddProduct = () => {
           sellerEmail: user.email,
           productCategory: data.category,
           productCondition: data.phoneCondition,
+          reportedItem: false,
+          isSold: false,
         };
 
         fetch("http://localhost:5000/products", {

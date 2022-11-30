@@ -36,8 +36,16 @@ const BookingModal = ({ product, setBooking }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setBooking(null);
+
+        fetch(`http://localhost:5000/product/sold/${_id}`, {
+          method: "PUT",
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            console.log(result);
+          });
+
         toast.success("Booking Successful!");
       });
 
